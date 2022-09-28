@@ -1,0 +1,93 @@
+<template>
+  <div
+    w="100%"
+    top="88px"
+    position-fixed
+    bottom="0"
+    overflow="scroll"
+    v-Ayy:[AyyText]="!loading"
+  >
+    <Scroll h="100%" overflow="hidden">
+      <div>
+        <ul>
+          <li
+            v-for="{ picUrl, name, id } of HotList"
+            flex
+            items-center
+            px-20px
+            pb-20px
+            box-border
+            :key="id"
+            @click="selectItem(id)"
+          >
+            <div flex-basis-60px mr-10px>
+              <img v-lazy="picUrl" rounded-8px w-60px h-60px />
+            </div>
+            <div
+              flex-col
+              flex
+              justify-center
+              flex-1
+              leading-20px
+              overflow-hidden
+            >
+              <!--  <h2 mb-10px></h2> -->
+              <p style="color: var(--color-text)">
+                {{ name }}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </Scroll>
+    <router-view v-slot="{ Component }">
+      <transition appear name="slide">
+        <component :is="Component" :id="ActiveId" />
+      </transition>
+    </router-view>
+  </div>
+</template>
+
+<script lang="jsx">
+import { onMounted, ref } from "vue"
+import { $Artist, $HotArtist } from "@/service/singer.js"
+import { useRouter } from "vue-router"
+import Scroll from "@/components/scorll/index.vue"
+import { computed } from "@vue/reactivity"
+export default {
+  components: {
+    Scroll,
+  },
+  setup: () => {
+    const HotList = ref([])
+    const router = useRouter()
+    const ActiveId = ref()
+    onMounted(async () => {
+      /*   const { data } = await $Artist() */
+      const { data: singerList } = await $HotArtist({
+        limit: 30,
+      })
+      HotList.value = singerList.artists
+      console.log(singerList.artists)
+    })
+    return {
+      HotList,
+      loading: computed(() => {
+        return Boolean(HotList.value.length)
+      }),
+      selectItem: (_) => {
+        ActiveId.value = _
+        router.push({
+          name: "Detail",
+          params: {
+            id: _,
+          },
+        })
+      },
+      ActiveId,
+      AyyText: "玩命加载中！！！",
+    }
+  },
+}
+</script>
+<style scoped></style>

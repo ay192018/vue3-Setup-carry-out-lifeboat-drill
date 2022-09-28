@@ -1,0 +1,30 @@
+{
+  "name": "app",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "pinia": "^2.0.21",
+    "vue": "^3.2.38",
+    "vue-router": "^4.1.5"
+  },
+  "devDependencies": {
+    "@better-scroll/core": "^2.4.2",
+    "@better-scroll/observe-dom": "^2.4.2",
+    "@better-scroll/scroll-bar": "^2.4.2",
+    "@better-scroll/slide": "^2.4.2",
+    "@iconify-json/ic": "^1.1.9",
+    "@iconify/json": "^2.1.113",
+    "@unocss/preset-icons": "^0.45.23",
+    "@unocss/reset": "^0.45.25",
+    "@vitejs/plugin-vue": "^3.0.3",
+    "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "axios": "^0.27.2",
+    "unocss": "^0.45.23",
+    "vite": "^3.0.9",
+    "vue3-lazy": "^1.0.0-alpha.1"
+  }
+}
