@@ -14,9 +14,11 @@
       left-6px
       z-20
       style="transform: translateZ(2px)"
-    >
-      左边
-    </div>
+      class="i-material-symbols-arrow-back-ios-new"
+      text="#ffcd32"
+      text-lg
+      h-40px
+    ></div>
     <h1
       position-absolute
       top-0

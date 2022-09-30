@@ -26,9 +26,11 @@
 
 <script lang="jsx">
 import { computed, ref, watch } from "vue"
+import { useTheme } from "../../stores/counter"
+import { storeToRefs } from "pinia"
 export default {
   setup: () => {
-    const isTheme = ref(false)
+    const { isTheme } = storeToRefs(useTheme())
     watch(
       () => isTheme.value,
       (val) => {
@@ -37,6 +39,9 @@ export default {
         } else {
           document.documentElement.classList.remove("dark")
         }
+      },
+      {
+        immediate: true,
       }
     )
     return {
