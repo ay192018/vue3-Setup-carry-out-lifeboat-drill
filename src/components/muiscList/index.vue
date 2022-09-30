@@ -5,7 +5,6 @@
       items-center
       h="64px"
       text-sm
-     
       v-for="(song, index) in songs"
       :key="song.id"
       @click="selectItem(song, index)"

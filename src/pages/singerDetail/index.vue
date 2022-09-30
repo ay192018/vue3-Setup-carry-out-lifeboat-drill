@@ -9,7 +9,7 @@
     overflow="scroll"
     style="background: var(--color-background)"
   >
-    <muiscList :songs="songs"></muiscList>
+    <muiscList :songs="songs" :data="data"></muiscList>
   </div>
 </template>
 
@@ -41,6 +41,7 @@ export default {
       })
       ArtistsItem.songs = data.hotSongs
       ArtistsItem.data = data.artist
+      console.log(ArtistsItem.data)
     })
     return {
       props,
