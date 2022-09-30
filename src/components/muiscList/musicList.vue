@@ -33,29 +33,28 @@
     </h1>
     <div
       position-relative
+      class="!bg-cover"
       transform-origin-t
       w="100%"
-      h-260px
-      z-0
-      style="background-size: cover"
-      :style="{ background: `url(${data.picUrl}) no-repeat` }"
+      h="260px"
+      :style="{ background: `url(${data.picUrl})` }"
     >
-      <div position-absolute top-200px z-10 w="100%">
+      <div position-absolute bottom-20px z-10 w="100%">
         <div
           box-border
           w-135px
+          py-7px
           my-0
           mx-auto
           text-center
-          h-20px
           style="border: 1px solid #ffcd32; font-size: 0; border-radius: 100px"
           text="#ffcd32"
         >
-          随机播放全部
+          <span inline-block class="v-middle" text="#ffcd32">随机播放全部</span>
         </div>
       </div>
 
-      <div w="100%" h="100%" style="backdrop-filter: bulr(0px)"></div>
+      <div position-absolute top-0 left-0 w="100%" h="100%"></div>
     </div>
     <Scroll
       style="height: calc(100% - 260px)"
@@ -92,7 +91,6 @@ export default {
       type: Object,
     },
   },
-  created() {},
 }
 </script>
 <style scoped></style>
