@@ -82,9 +82,9 @@ img {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.8);
 }
-active {
+.active {
   width: 20px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--vt--color-primary);
 }
 </style>

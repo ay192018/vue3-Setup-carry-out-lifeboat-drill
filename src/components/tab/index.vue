@@ -1,12 +1,6 @@
 <template>
   <div flex h-44px leading-44px text-center>
-    <router-link
-      flex-1
-      class="link"
-      v-for="(tab, _) in tabs"
-      :key="tab.path"
-      :to="tab.path"
-    >
+    <router-link flex-1 v-for="(tab, _) in tabs" :key="tab.path" :to="tab.path">
       <span pb="5px" :class="{ TabActive: route.path === tab.path }">
         {{ tab.name }}
       </span>
@@ -52,7 +46,7 @@ export default {
   color: var(--color-text);
 }
 .TabActive {
-  color: var(--vt-title-color);
-  border-bottom: 2px solid var(--vt-title-color);
+  color: var(--vt--color-primary);
+  border-bottom: 2px solid var(--vt--color-primary);
 }
 </style>

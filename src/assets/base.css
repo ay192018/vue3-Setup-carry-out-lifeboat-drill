@@ -1,27 +1,25 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
+  --vt--color-primary: #ffcd32;
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
-
   --vt-c-black: #222;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
-
   --vt-c-indigo: #2c3e50;
-
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
+  --vt-c-divider-light-2: rgba(60, 60, 60, 0.9);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, .9);
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-  --vt-title-color: #ffcd32;
+
   --vt-name-color-light: #576b95;
   --vt-name-color-dark: #7d90a9;
+  --minPlayer--bg--light: #f7f7f7;
+  --minPlayer--bg--dark: #333333;
 }
 
 /* semantic color variables for this project */
@@ -38,6 +36,7 @@
 
   --section-gap: 160px;
   --vt-name-color: var(--vt-name-color-light);
+  --minPlayer--bg: var(--minPlayer--bg--light);
 }
 
 :root[class="dark"] {
@@ -51,6 +50,7 @@
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-2);
   --vt-name-color: var(--vt-name-color-dark);
+  --minPlayer--bg: var(--minPlayer--bg--dark);
 }
 
 *,

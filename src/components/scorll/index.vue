@@ -4,9 +4,10 @@
   </div>
 </template>
 
-<script lang="jsx">
+<script>
 import useScroll from "./useScroll"
 import { ref } from "vue"
+
 export default {
   name: "scroll",
   props: {
@@ -14,12 +15,20 @@ export default {
       type: Boolean,
       default: true,
     },
+    probeType: {
+      type: Number,
+      default: 0,
+    },
   },
-  setup: (props) => {
+  emits: ["scroll"],
+  setup(props, { emit }) {
     const rootRef = ref(null)
-    useScroll(rootRef, props)
-    return { rootRef }
+    const scroll = useScroll(rootRef, props, emit)
+
+    return {
+      rootRef,
+      scroll,
+    }
   },
 }
 </script>
-<style scoped></style>

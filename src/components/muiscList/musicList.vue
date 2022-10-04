@@ -1,21 +1,13 @@
 <template>
-  <div
-    position-fixed
-    bottom="0"
-    w="100%"
-    top="0"
-    style="height: 100%"
-    overflow="scroll"
-  >
+  <div position-fixed bottom="0" w="100%" top="0" h="100%" overflow="scroll">
     <div
       @click="$router.back()"
       position-absolute
       top-0
       left-6px
       z-20
-      style="transform: translateZ(2px)"
+      style="transform: translateZ(2px); color: var(--vt--color-primary)"
       class="i-material-symbols-arrow-back-ios-new"
-      text="#ffcd32"
       text-lg
       h-40px
     ></div>
@@ -25,11 +17,10 @@
       left="10%"
       w="80%"
       z-20
-      style="transform: translateZ(2px)"
+      style="transform: translateZ(2px); color: var(--vt--color-primary)"
       text-center
       leading-40px
       text-lg
-      text="#ffcd32"
     >
       {{ data.name }}
     </h1>
@@ -49,14 +40,30 @@
           my-0
           mx-auto
           text-center
-          style="border: 1px solid #ffcd32; font-size: 0; border-radius: 100px"
-          text="#ffcd32"
+          b-rd-100px
+          border-1px
+         
+          text-0
+          style="border-radius: 100px; color: var(--vt--color-primary);border-color: var(--vt--color-primary);"
         >
-          <span inline-block class="v-middle" text="#ffcd32">随机播放全部</span>
+          <span
+            inline-block
+            class="v-middle"
+            style="color: var(--vt--color-primary)"
+            text-sm
+            >随机播放全部</span
+          >
         </div>
       </div>
 
-      <div position-absolute top-0 left-0 w="100%" h="100%"></div>
+      <div
+        position-absolute
+        top-0
+        left-0
+        w="100%"
+        h="100%"
+        bg="#07111b66"
+      ></div>
     </div>
     <Scroll
       style="height: calc(100% - 260px)"
@@ -67,7 +74,7 @@
       z-0
     >
       <div py-20px px-30px box-border>
-        <SongList :songs="songs" style="height: 100%"></SongList>
+        <SongList :songs="songs" h="100%"></SongList>
       </div>
     </Scroll>
   </div>

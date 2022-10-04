@@ -16,12 +16,12 @@
         </div>
         <div>
           <h1
-            class="list-title"
+            v-Ayy:[AyyText]="loading"
             h-65px
             leading-65px
             text-center
             text-sm
-            text="#ffcd32"
+            style="color: var(--vt--color-primary)"
           >
             {{ HotSongs }}
           </h1>
@@ -57,6 +57,11 @@
         </div>
       </div>
     </Scroll>
+    <router-view v-slot="{ Component }">
+      <transition appear name="slide">
+        <component :is="Component" :id="ActiveId" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -65,6 +70,7 @@ import { onMounted, ref, computed } from "vue"
 import { $Banner, $Song } from "@/service/home.js"
 import Banner from "@/components/banner/index.vue"
 import Scroll from "@/components/scorll/index.vue"
+import { useRouter } from "vue-router"
 export default {
   name: "recommend",
   components: {
@@ -77,14 +83,26 @@ export default {
     const albums = ref([])
     const AyyText = ref("正在玩命加载中！！")
     const HotSongs = ref("热门歌单推荐")
+    const ActiveId = ref()
+    const router = useRouter()
     onMounted(async () => {
       const { data } = await $Banner()
       const { data: song } = await $Song({
-        limit: 20,
+        limit: 100,
       })
-      console.log(song)
-      sliders.value = data.banners
-      albums.value = song.result
+      song.result.forEach((_) => {
+        albums.value.push({
+          name: _.name,
+          picUrl: _.picUrl,
+          id: _.id,
+        })
+      })
+      data.banners.forEach((_) => {
+        sliders.value.push({
+          imageUrl: _.imageUrl,
+          url: _.url,
+        })
+      })
     })
     return {
       sliders,
@@ -94,6 +112,16 @@ export default {
       }),
       AyyText,
       HotSongs,
+      ActiveId,
+      selectItem: (_) => {
+        ActiveId.value = _
+        router.push({
+          name: "recommendDetail",
+          params: {
+            id: _,
+          },
+        })
+      },
     }
   },
 }

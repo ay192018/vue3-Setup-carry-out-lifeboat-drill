@@ -1,8 +1,8 @@
 <template>
-  <div class="-translate-50%" position-absolute top="50%" left="50%">
+  <div class="-translate-x-50%" position-absolute top="50%" left="50%">
     <div text-center>
       <img width="30" height="30" src="./loading.gif" inline />
-      <p leading-20px style="color: var(--color-text)">
+      <p leading-20px style="color: var(--vt--color-primary)">
         {{ title }}
       </p>
     </div>

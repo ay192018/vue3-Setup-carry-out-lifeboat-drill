@@ -7,14 +7,14 @@
       text-sm
       v-for="(song, index) in songs"
       :key="song.id"
-      @click="selectItem(song, index)"
+      @click="selectItem(index)"
     >
       <div w-25px mr-20px text-center flex-basis-25px>
         <span :class="getRankCls(index)">{{ getRankText(index) }}</span>
       </div>
       <div flex-1 leading-20px overflow-hidden>
         <h2 truncate>{{ song.name }}</h2>
-        <p class="desc" truncate mt-4px style="color: var(--vt-name-color)">
+        <p truncate mt-4px style="color: var(--vt-name-color)">
           {{ getDesc(song) }}
         </p>
       </div>
@@ -23,6 +23,9 @@
 </template>
 
 <script>
+import { useAudio } from "@/stores/useAudio"
+import { storeToRefs } from "pinia"
+import { fullScreen } from "@/stores/useStatus"
 export default {
   name: "song-list",
   props: {
@@ -33,27 +36,32 @@ export default {
       },
     },
   },
-  emits: ["select"],
-  methods: {
-    getDesc(song) {
-      const name = song.ar.map((_) => _.name)
-      return `${name.join("-")}-${song.al.name}`
-    },
-    selectItem(song, index) {
-      this.$emit("select", { song, index })
-    },
-    getRankCls(index) {
-      if (index <= 2) {
-        return `icon icon${index}`
-      } else {
-        return "text"
-      }
-    },
-    getRankText(index) {
-      if (index > 2) {
-        return index + 1
-      }
-    },
+  setup: (props) => {
+    const { playlist, currentIndex } = storeToRefs(useAudio())
+
+    return {
+      getDesc(song) {
+        const name = song.ar.map((_) => _.name)
+        return `${name.join("-")}-${song.al.name}`
+      },
+      selectItem(index) {
+        fullScreen.value = true
+        playlist.value = props?.songs
+        currentIndex.value = index
+      },
+      getRankCls(index) {
+        if (index <= 2) {
+          return `icon icon${index}`
+        } else {
+          return "text"
+        }
+      },
+      getRankText(index) {
+        if (index > 2) {
+          return index + 1
+        }
+      },
+    }
   },
 }
 </script>

@@ -2,11 +2,13 @@
 import { RouterView } from "vue-router"
 import Header from "@/components/header/index.vue"
 import Tab from "@/components/Tab/index.vue"
+import Player from "@/components/player/index.vue"
 export default {
   components: {
     Header,
     Tab,
     RouterView,
+    Player,
   },
   setup: () => {
     return {}
@@ -24,6 +26,7 @@ export default {
       </keep-alive>
     </transition>
   </router-view>
+  <Player />
 </template>
 
 <style scoped></style>

@@ -15,18 +15,23 @@
       "
       text-2xl
       @click="isTheme = !isTheme"
+      style="color: var(--vt--color-primary)"
     ></div>
     <div>
-      <div class="i-logos-medusa-icon" text-7 mr=".5" />
-      <span text="#ffcd32">{{ APPNAME }}</span>
+      <div class="i-logos-morpheus-icon" text-7 mr="1" />
+      <span class="activeLyrics">{{ APPNAME }}</span>
     </div>
-    <div class="i-carbon-user-avatar-filled-alt" text-2xl></div>
+    <div
+      class="i-icon-park-solid-theme"
+      text-2xl
+      style="color: var(--vt--color-primary)"
+    ></div>
   </div>
 </template>
 
 <script lang="jsx">
 import { computed, ref, watch } from "vue"
-import { useTheme } from "../../stores/counter"
+import { useTheme } from "../../stores/useTheme"
 import { storeToRefs } from "pinia"
 export default {
   setup: () => {

@@ -65,10 +65,17 @@ export default {
     onMounted(async () => {
       /*   const { data } = await $Artist() */
       const { data: singerList } = await $HotArtist({
-        limit: 30,
+        limit: 100,
       })
-      HotList.value = singerList.artists
-      console.log(singerList.artists)
+      singerList.artists.forEach((_) => {
+        HotList.value.push({
+          picUrl: _.picUrl,
+          name: _.name,
+          id: _.id,
+        })
+      })
+
+      console.log(HotList.value)
     })
     return {
       HotList,
