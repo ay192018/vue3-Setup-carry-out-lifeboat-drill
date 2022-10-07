@@ -10,7 +10,7 @@
       @click="selectItem(index)"
     >
       <div w-25px mr-20px text-center flex-basis-25px>
-        <span :class="getRankCls(index)">{{ getRankText(index) }}</span>
+        <span :class="getRankCls(index)" text-xl>{{ getRankText(index) }}</span>
       </div>
       <div flex-1 leading-20px overflow-hidden>
         <h2 truncate>{{ song.name }}</h2>
@@ -51,9 +51,7 @@ export default {
       },
       getRankCls(index) {
         if (index <= 2) {
-          return `icon icon${index}`
-        } else {
-          return "text"
+          return `i-bi-trophy-fill text-[var(--vt--color-primary)]`
         }
       },
       getRankText(index) {

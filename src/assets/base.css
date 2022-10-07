@@ -19,6 +19,8 @@
   --vt-name-color-dark: #7d90a9;
   --minPlayer--bg--light: #ffffffb3;
   --minPlayer--bg--dark: rgba(0, 0, 0, 0.7);
+  --c-text-personality-light: #b2b2b2;
+  --c-text-personality-dark: #6c6c6c;
 }
 
 /* semantic color variables for this project */
@@ -36,6 +38,7 @@
   --section-gap: 160px;
   --vt-name-color: var(--vt-name-color-light);
   --minPlayer--bg: var(--minPlayer--bg--light);
+  --c-text-personality: var(--c-text-personality-light);
 }
 
 :root[class="dark"] {
@@ -50,6 +53,7 @@
   --color-text: var(--vt-c-text-dark-2);
   --vt-name-color: var(--vt-name-color-dark);
   --minPlayer--bg: var(--minPlayer--bg--dark);
+  --c-text-personality: var(--c-text-personality-dark);
 }
 
 *,

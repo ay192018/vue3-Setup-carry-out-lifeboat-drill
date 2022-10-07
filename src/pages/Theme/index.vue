@@ -9,6 +9,7 @@
     overflow="scroll"
     backdrop-blur-5px
     class="bg-[var(--minPlayer--bg)]"
+    mb-60px
   >
     <div
       text-center

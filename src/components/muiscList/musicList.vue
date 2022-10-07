@@ -24,60 +24,82 @@
     >
       {{ data?.name }}
     </h1>
-    <div
-      position-relative
-      class="!bg-cover"
-      transform-origin-t
-      w="100%"
-      h="260px"
-      :style="{ background: `url(${data?.picUrl})` }"
-    >
-      <div position-absolute bottom-20px z-10 w="100%">
-        <div
-          box-border
-          w-135px
-          py-7px
-          my-0
-          mx-auto
-          text-center
-          b-rd-100px
-          border-1px
-          text-0
-          style="
-            border-radius: 100px;
-            color: var(--vt--color-primary);
-            border-color: var(--vt--color-primary);
-          "
-        >
-          <span
-            inline-block
-            class="v-middle"
-            style="color: var(--vt--color-primary)"
-            text-sm
-            >随机播放全部</span
-          >
-        </div>
-      </div>
 
-      <div
+    <Scroll
+      h-full
+      overflow="hidden"
+      position-absolute
+      w="100%"
+      bottom-0
+      mb-60px
+    >
+      <div>
+        <div
+          position-relative
+          class="!bg-cover"
+          transform-origin-t
+          w="100%"
+          h="310px"
+          :style="{ background: `url(${data?.picUrl})` }"
+        >
+          <div
+            position-absolute
+            right-25px
+            top-260px
+            style="width: calc(100% - 25px)"
+            text-right
+            z-100
+          >
+            <div
+              text-right
+              class="text-[var(--vt--color-primary)]"
+              text-lg
+              mt-12px
+              font-500
+              leading-24px
+              style="width: calc(100% - 85px)"
+              z-100
+              truncate
+            >
+              <strong> {{ data?.name }}</strong>
+            </div>
+            <div
+              w-70px
+              h-70px
+              inline
+              float-right
+              top--20px
+              rd-12px
+              overflow-hidden
+            >
+              <img v-lazy="data?.picUrl" w-full h-full object-cover />
+            </div>
+            <div
+              position-absolute
+              right-25px
+              top-100px
+              class="text-[var(--c-text-personality)]"
+              truncate
+              style="width: calc(100% - 25px)"
+              text-right
+              px-10px
+            >
+              {{ data?.description || data?.briefDesc }}
+            </div>
+          </div>
+
+          <!--       <div
         position-absolute
         top-0
         left-0
         w="100%"
         h="100%"
         bg="#07111b66"
-      ></div>
-    </div>
-    <Scroll
-      style="height: calc(100% - 260px)"
-      overflow="hidden"
-      position-absolute
-      w="100%"
-      bottom-0
-      z-0
-    >
-      <div py-20px px-30px box-border>
-        <SongList :songs="songs" h="100%"></SongList>
+      ></div> -->
+        </div>
+        <div py-20px px-30px box-border mt-80px>
+          <SongList :songs="songs" h="100%"></SongList>
+        </div>
       </div>
     </Scroll>
   </div>

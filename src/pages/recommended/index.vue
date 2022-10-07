@@ -6,6 +6,7 @@
     bottom="0"
     overflow="scroll"
     v-Ayy:[AyyText]="loading"
+    mb-60px
   >
     <Scroll h="100%" overflow="hidden">
       <div>

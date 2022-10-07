@@ -47,6 +47,13 @@ const router = createRouter({
       path: "/rank",
       name: "rank",
       component: () => import("@/pages/rank/index.vue"),
+      children: [
+        {
+          name: "rankDetail",
+          path: ":id",
+          component: () => import("@/pages/rankDetail/index.vue"),
+        },
+      ],
     },
   ],
 })

@@ -183,7 +183,7 @@
                 @progress-changed="onProgressChanged"
               ></Progress>
             </div>
-            <span text-left>
+            <span text-left class="text-[var(--vt--color-primary)]">
               {{ formatTime(playlist[currentIndex]?.dt) }}
             </span>
           </div>

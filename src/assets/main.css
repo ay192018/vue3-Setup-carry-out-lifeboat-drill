@@ -33,6 +33,15 @@ a {
   font-size: 18px;
   animation: swing 1s infinite;
 }
+.hidden-3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  word-break: break-all;
+}
 @keyframes swing {
   0% {
     -webkit-transform: scale(1);

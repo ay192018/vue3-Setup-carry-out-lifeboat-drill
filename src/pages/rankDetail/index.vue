@@ -6,9 +6,8 @@
     left-0
     bottom-0
     right-0
-    overflow="scroll"
-    style="background: var(--color-background)"
-   
+    overflow-scroll
+    class="bg-[var(--color-background)]"
   >
     <muiscList :songs="songs" :data="data"></muiscList>
   </div>
@@ -16,7 +15,7 @@
 
 <script lang="jsx">
 import { onMounted, reactive, ref, toRefs } from "vue"
-import { $ArtistDetail, $Artists } from "@/service/singer.js"
+import { $playlistDetail, $Allsong } from "@/service/recommended.js"
 
 import muiscList from "@/components/muiscList/musicList.vue"
 export default {
@@ -34,15 +33,17 @@ export default {
       songs: [],
     })
     onMounted(async () => {
-      /*  const { data } = await $ArtistDetail({
-        id: props.id,
-      }) */
-      const { data } = await $Artists({
+      const { data } = await $playlistDetail({
         id: props.id,
       })
-      ArtistsItem.songs = data.hotSongs
-      ArtistsItem.data = data.artist
-      console.log(ArtistsItem.data)
+      data.playlist.picUrl = data.playlist.coverImgUrl
+      ArtistsItem.data = data.playlist
+      if (data.playlist) {
+        const { data: song } = await $Allsong({
+          ids: data.playlist.trackIds.map((_) => _.id).join(","),
+        })
+        ArtistsItem.songs = song.songs
+      }
     })
     return {
       props,
