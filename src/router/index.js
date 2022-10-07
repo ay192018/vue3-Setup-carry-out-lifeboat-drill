@@ -6,6 +6,13 @@ const router = createRouter({
     {
       path: "/",
       redirect: "/recommend",
+      children: [
+        {
+          path: "/Theme",
+          name: "Theme",
+          component: () => import("@/pages/Theme/index.vue"),
+        },
+      ],
     },
     {
       path: "/recommend",

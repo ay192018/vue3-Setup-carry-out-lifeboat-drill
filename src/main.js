@@ -8,6 +8,7 @@ import "./assets/main.css"
 import lazyPlugin from "vue3-lazy"
 import "@unocss/reset/tailwind.css"
 import piniaPlugin from "@/stores/plugin/piniaPlugin"
+
 const app = createApp(App)
 
 app

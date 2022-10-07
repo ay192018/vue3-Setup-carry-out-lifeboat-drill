@@ -7,7 +7,7 @@
     overflow="scroll"
     v-Ayy:[AyyText]="!loading"
   >
-    <Scroll h="100%" overflow="hidden">
+    <Scroll h="100%" overflow="hidden" ref="ScrollRef">
       <div>
         <ul>
           <li
@@ -49,7 +49,7 @@
 </template>
 
 <script lang="jsx">
-import { onMounted, ref } from "vue"
+import { onMounted, ref, watchPostEffect } from "vue"
 import { $Artist, $HotArtist } from "@/service/singer.js"
 import { useRouter } from "vue-router"
 import Scroll from "@/components/scorll/index.vue"
@@ -62,10 +62,13 @@ export default {
     const HotList = ref([])
     const router = useRouter()
     const ActiveId = ref()
-    onMounted(async () => {
-      /*   const { data } = await $Artist() */
+    const ScrollRef = ref()
+    const offset = 0
+
+    watchPostEffect(async () => {
       const { data: singerList } = await $HotArtist({
         limit: 100,
+        offset: offset,
       })
       singerList.artists.forEach((_) => {
         HotList.value.push({
@@ -74,10 +77,15 @@ export default {
           id: _.id,
         })
       })
-
-      console.log(HotList.value)
+      ScrollRef.value.scroll.finishPullUp()
+    })
+    onMounted(() => {
+      ScrollRef.value.scroll.on("pullingUp", () => {
+        console.log(offset)
+      })
     })
     return {
+      ScrollRef,
       HotList,
       loading: computed(() => {
         return Boolean(HotList.value.length)

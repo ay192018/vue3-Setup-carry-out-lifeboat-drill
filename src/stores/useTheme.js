@@ -4,6 +4,7 @@ export const useTheme = defineStore("useTheme", {
   state: () => {
     return {
       isTheme: false,
+      color: "" || "#ffcd32",
     }
   },
 })

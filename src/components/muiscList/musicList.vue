@@ -22,7 +22,7 @@
       leading-40px
       text-lg
     >
-      {{ data.name }}
+      {{ data?.name }}
     </h1>
     <div
       position-relative
@@ -30,7 +30,7 @@
       transform-origin-t
       w="100%"
       h="260px"
-      :style="{ background: `url(${data.picUrl})` }"
+      :style="{ background: `url(${data?.picUrl})` }"
     >
       <div position-absolute bottom-20px z-10 w="100%">
         <div
@@ -42,9 +42,12 @@
           text-center
           b-rd-100px
           border-1px
-         
           text-0
-          style="border-radius: 100px; color: var(--vt--color-primary);border-color: var(--vt--color-primary);"
+          style="
+            border-radius: 100px;
+            color: var(--vt--color-primary);
+            border-color: var(--vt--color-primary);
+          "
         >
           <span
             inline-block

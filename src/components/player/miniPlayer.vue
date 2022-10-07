@@ -9,7 +9,12 @@
       z-180
       w-full
       h-60px
-      style="background: var(--minPlayer--bg)"
+      backdrop-blur-5px
+      style="
+        background: var(--minPlayer--bg);
+        box-shadow: rgb(255 255 255 / 10%) 0px 4px 6px -1px,
+          rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+      "
       v-show="!fullScreen"
       @click="fullScreen = true"
     >
@@ -71,7 +76,7 @@ export default {
     },
     togglePlay: Function,
   },
-  setup() {
+  setup: () => {
     const { playlist, currentIndex } = storeToRefs(useAudio())
     const { cdCls, cdRef, cdImageRef } = useCd()
     return {

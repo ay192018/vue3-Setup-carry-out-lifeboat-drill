@@ -1,9 +1,10 @@
 import BScroll from "@better-scroll/core"
 import ObserveDOM from "@better-scroll/observe-dom"
-import ScrollBar from "@better-scroll/scroll-bar"
+import Pullup from "@better-scroll/pull-up"
+
 import { onMounted, onUnmounted, onActivated, onDeactivated, ref } from "vue"
 
-BScroll.use(ObserveDOM).use(ScrollBar)
+BScroll.use(ObserveDOM).use(Pullup)
 
 export default function useScroll(wrapperRef, options, emit) {
   const scroll = ref(null)
@@ -11,7 +12,7 @@ export default function useScroll(wrapperRef, options, emit) {
   onMounted(() => {
     const scrollVal = (scroll.value = new BScroll(wrapperRef.value, {
       observeDOM: true,
-      scrollbar: true,
+      pullUpLoad: true,
       ...options,
     }))
 

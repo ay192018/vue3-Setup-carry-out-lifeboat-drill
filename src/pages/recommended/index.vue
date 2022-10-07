@@ -21,7 +21,7 @@
             leading-65px
             text-center
             text-sm
-            style="color: var(--vt--color-primary)"
+            class="text-[var(--vt--color-primary)]"
           >
             {{ HotSongs }}
           </h1>

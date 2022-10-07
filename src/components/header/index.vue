@@ -15,22 +15,22 @@
       "
       text-2xl
       @click="isTheme = !isTheme"
-      style="color: var(--vt--color-primary)"
+      class="text-[var(--vt--color-primary)]"
     ></div>
     <div>
       <div class="i-logos-morpheus-icon" text-7 mr="1" />
       <span class="activeLyrics">{{ APPNAME }}</span>
     </div>
     <div
-      class="i-icon-park-solid-theme"
+      class="i-icon-park-solid-theme text-[var(--vt--color-primary)]"
       text-2xl
-      style="color: var(--vt--color-primary)"
+      @click="$router.push('/Theme')"
     ></div>
   </div>
 </template>
 
 <script lang="jsx">
-import { computed, ref, watch } from "vue"
+import { computed, watch } from "vue"
 import { useTheme } from "../../stores/useTheme"
 import { storeToRefs } from "pinia"
 export default {

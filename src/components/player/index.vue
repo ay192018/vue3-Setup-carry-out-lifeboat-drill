@@ -14,7 +14,8 @@
         top-0
         bottom-0
         z-150
-        style="background: var(--color-border)"
+        backdrop-blur-5px
+        class="bg-[var(--color-border)]"
         v-show="fullScreen"
       >
         <div
@@ -31,12 +32,11 @@
         </div>
         <div relative mb-25px class="top">
           <div
-            class="i-material-symbols-arrow-back-ios-new-rounded -rotate-90"
+            class="i-material-symbols-arrow-back-ios-new-rounded -rotate-90 text-[var(--vt--color-primary)]"
             absolute
             top-6px
             left-6px
             z-50
-            style="color: var(--vt--color-primary)"
             text-2xl
             leading-40px
             p-9px
@@ -44,7 +44,7 @@
           ></div>
           <h1
             w="70%"
-            style="color: var(--vt--color-primary)"
+            class="text-[var(--vt--color-primary)]"
             my-0
             mx-auto
             leading-40px
@@ -54,7 +54,7 @@
           >
             {{ songName }}
           </h1>
-          <h2 leading-20px text-center style="color: var(--vt--color-primary)">
+          <h2 leading-20px text-center class="text-[var(--color-text)]">
             <span v-for="({ name }, index) of songSinger" :key="index"
               >{{ name }}&nbsp;&nbsp;</span
             >
@@ -111,7 +111,7 @@
             </div>
             <div
               text-center
-              style="color: var(--vt--color-primary)"
+              class="text-[var(--vt--color-primary)]"
               leading-32px
               text-xl
               v-if="currentLyric"
@@ -168,7 +168,7 @@
           </div>
           <div flex items-center w="90%" mx-auto my-0 py-10px>
             <span
-              style="color: var(--vt--color-primary)"
+              class="text-[var(--vt--color-primary)]"
               leading-30px
               flex-basis-40px
               w-40px
@@ -190,22 +190,21 @@
           <div flex items-center>
             <div
               text-3xl
-              style="color: var(--vt--color-primary)"
+              class="text-[var(--vt--color-primary)]"
               :class="modeIcon"
               flex-1
               @click="changeMode"
             ></div>
             <div
               text-3xl
-              style="color: var(--vt--color-primary)"
-              class="i-fluent-previous-16-filled"
+              class="i-fluent-previous-16-filled text-[var(--vt--color-primary)]"
               flex-1
               text-right
               @click="prev"
             ></div>
             <div
               text-5xl
-              style="color: var(--vt--color-primary)"
+              class="text-[var(--vt--color-primary)]"
               :class="playIcon"
               px20px
               flex-1
@@ -221,8 +220,7 @@
             ></div>
             <div
               text-3xl
-              style="color: var(--vt--color-primary)"
-              class="i-flat-color-icons-like"
+              class="i-icon-park-outline-love-and-help text-[var(--vt--color-primary)]"
               text-left
               flex-1
             ></div>
@@ -244,7 +242,7 @@
 </template>
 
 <script lang="jsx">
-import { ref, computed, watch, nextTick, watchEffect } from "vue"
+import { ref, computed, watch, nextTick } from "vue"
 import { useAudio } from "@/stores/useAudio"
 import { storeToRefs } from "pinia"
 import { $songUrl, $lyrics } from "@/service/song"
@@ -257,6 +255,7 @@ import useToggleCd from "./useToggleCd"
 import miniPlayer from "./miniPlayer.vue"
 import useAnimation from "./useAnimation"
 import { fullScreen, playing } from "@/stores/useStatus"
+import useLodingConfig from "@/stores/plugin/useLoding"
 export default {
   components: {
     Progress,
@@ -277,6 +276,7 @@ export default {
     const currentLyric = ref()
     let progressChange = false
     const { changeMode, ModeIndex } = useMode()
+    useLodingConfig()
     const {
       currentShow,
       middleLStyle,

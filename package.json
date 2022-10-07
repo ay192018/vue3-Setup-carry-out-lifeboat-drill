@@ -14,7 +14,7 @@
   "devDependencies": {
     "@better-scroll/core": "^2.4.2",
     "@better-scroll/observe-dom": "^2.4.2",
-    "@better-scroll/scroll-bar": "^2.4.2",
+    "@better-scroll/pull-up": "^2.4.2",
     "@better-scroll/slide": "^2.4.2",
     "@iconify-json/ic": "^1.1.9",
     "@iconify/json": "^2.1.113",

@@ -6,8 +6,8 @@
     left-0
     bottom-0
     right-0
-    overflow="scroll"
-    style="background: var(--color-background)"
+    overflow-scroll
+    class="bg-[var(--color-background)]"
   >
     <muiscList :songs="songs" :data="data"></muiscList>
   </div>

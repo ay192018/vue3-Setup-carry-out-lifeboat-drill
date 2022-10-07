@@ -296,10 +296,10 @@
   dependencies:
     "@better-scroll/core" "^2.4.2"
 
-"@better-scroll/scroll-bar@^2.4.2":
+"@better-scroll/pull-up@^2.4.2":
   version "2.4.2"
-  resolved "https://registry.npmmirror.com/@better-scroll/scroll-bar/-/scroll-bar-2.4.2.tgz#257856a1da27d65eb899ac26f01060afbf800bdb"
-  integrity sha512-zZd0+sWfzTCXJeuA001o5bea7AvLYz7BCE7dolxFbPTIPnV5V5UEH8LLdXQ/HIwgxI0Pj9PoY9njSuhooh6lfg==
+  resolved "https://registry.npmmirror.com/@better-scroll/pull-up/-/pull-up-2.4.2.tgz#25357ceef7bac7520930f0631896b63a10f82a6f"
+  integrity sha512-07Cke3oa96lN9/inxJZ0ixh0nBbbqxOi2IKcBGtD6dP+susiMcdhgd/c7zNRjXkwlw0vzTNfXTgExIOEWzLHYg==
   dependencies:
     "@better-scroll/core" "^2.4.2"
 

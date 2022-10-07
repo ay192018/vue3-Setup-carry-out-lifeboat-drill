@@ -19,12 +19,9 @@
 .slide-leave-to {
   transform: translate3d(100%, 0, 0);
 }
-
-a,
-.green {
+a {
+  -webkit-backface-visibility: hidden;
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
 }
 .activeLyrics {
   transform: rotateX(360deg);
@@ -56,11 +53,6 @@ a,
   70% {
     -webkit-transform: scale(1);
     transform: scale(1);
-  }
-}
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
 

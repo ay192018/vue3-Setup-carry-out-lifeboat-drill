@@ -1,6 +1,5 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --vt--color-primary: #ffcd32;
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
@@ -10,7 +9,7 @@
   --vt-c-indigo: #2c3e50;
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.9);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, .9);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.9);
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
@@ -18,8 +17,8 @@
 
   --vt-name-color-light: #576b95;
   --vt-name-color-dark: #7d90a9;
-  --minPlayer--bg--light: #f7f7f7;
-  --minPlayer--bg--dark: #333333;
+  --minPlayer--bg--light: #ffffffb3;
+  --minPlayer--bg--dark: rgba(0, 0, 0, 0.7);
 }
 
 /* semantic color variables for this project */

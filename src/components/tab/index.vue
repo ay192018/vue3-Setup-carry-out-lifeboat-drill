@@ -1,10 +1,15 @@
 <template>
   <div flex h-44px leading-44px text-center>
-    <router-link flex-1 v-for="(tab, _) in tabs" :key="tab.path" :to="tab.path">
+    <div
+      flex-1
+      v-for="(tab, _) in tabs"
+      :key="tab.path"
+      @click="$router.push(tab.path)"
+    >
       <span pb="5px" :class="{ TabActive: route.path === tab.path }">
         {{ tab.name }}
       </span>
-    </router-link>
+    </div>
   </div>
 </template>
 
