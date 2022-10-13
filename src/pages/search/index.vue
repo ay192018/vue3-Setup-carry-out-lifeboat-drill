@@ -46,7 +46,7 @@
                 text-2xl
                 mx-10px
                 v-if="searchKey.trim() !== ''"
-                @click="(searchKey = ''), inputRef.focus()"
+                @click=";(searchKey = ''), inputRef.focus()"
               />
             </transition>
           </div>
@@ -67,6 +67,7 @@
             :isPullUpLoad="isPullUpLoad"
             :page="page"
             :value="searchKey"
+            @resetPage="page = 1"
           />
         </transition>
       </div>
@@ -75,15 +76,15 @@
 </template>
 
 <script lang="jsx">
-import { $Searchdefault, $HotDefault } from "@/service/search";
-import { onMounted, ref, nextTick, watch, computed } from "vue";
-import { useSearch } from "@/stores/useSearch";
-import { storeToRefs } from "pinia";
-import HistorySearch from "./components/historySearch.vue";
-import HotSearch from "./components/HotSearch.vue";
-import SearchResult from "./components/searchResult.vue";
-import SearchSuggest from "./components/searchSuggest.vue";
-import Scroll from "@/components/scorll/index.vue";
+import { $Searchdefault, $HotDefault } from "@/service/search"
+import { onMounted, ref, nextTick, watch, computed } from "vue"
+import { useSearch } from "@/stores/useSearch"
+import { storeToRefs } from "pinia"
+import HistorySearch from "./components/historySearch.vue"
+import HotSearch from "./components/HotSearch.vue"
+import SearchResult from "./components/searchResult.vue"
+import SearchSuggest from "./components/searchSuggest.vue"
+import Scroll from "@/components/scorll/index.vue"
 export default {
   components: {
     HistorySearch,
@@ -93,64 +94,64 @@ export default {
     SearchResult,
   },
   setup: () => {
-    const placeholder = ref("搜索");
-    const searchKey = ref("");
-    const HotList = ref([]);
-    const inputRef = ref();
-    const ScrollRef = ref();
-    const isResultShow = ref(false);
-    const isPullUpLoad = ref(false);
-    const page = ref(1);
-    const { historyList } = storeToRefs(useSearch());
-    const resultRef = ref();
+    const placeholder = ref("搜索")
+    const searchKey = ref("")
+    const HotList = ref([])
+    const inputRef = ref()
+    const ScrollRef = ref()
+    const isResultShow = ref(false)
+    const isPullUpLoad = ref(false)
+    const page = ref(1)
+    const { historyList } = storeToRefs(useSearch())
+    const resultRef = ref()
 
     // data
     onMounted(async () => {
-      const { data } = await $Searchdefault();
-      const { data: Hot } = await $HotDefault();
-      HotList.value = Hot.data;
-      placeholder.value = data.data;
-    });
+      const { data } = await $Searchdefault()
+      const { data: Hot } = await $HotDefault()
+      HotList.value = Hot.data
+      placeholder.value = data.data
+    })
     watch(
       () => searchKey.value.trim() !== "" && isResultShow.value,
       (val) => {
         if (val) {
-          console.log(11);
+          console.log(11)
           ScrollRef.value?.scroll.on("pullingUp", () => {
-            isPullUpLoad.value = true;
-            page.value++;
+            isPullUpLoad.value = true
+            page.value++
 
-            ScrollRef.value?.scroll.finishPullUp();
-            ScrollRef.value?.scroll.bscroll?.refresh();
-            isPullUpLoad.value = false;
-          });
+            ScrollRef.value?.scroll.finishPullUp()
+            ScrollRef.value?.scroll.bscroll?.refresh()
+            isPullUpLoad.value = false
+          })
         }
       }
-    );
+    )
     //  function
 
     const enterKey = () => {
       if (searchKey.value.trim() === "") {
         if (placeholder.value === "搜索") {
-          return;
+          return
         } else {
-          searchKey.value = placeholder.value.realkeyword;
+          searchKey.value = placeholder.value.realkeyword
         }
       }
-      const index = historyList.value.indexOf(searchKey.value);
+      const index = historyList.value.indexOf(searchKey.value)
       if (index > -1) {
-        historyList.value.splice(index, 1);
-        historyList.value.unshift(searchKey.value);
+        historyList.value.splice(index, 1)
+        historyList.value.unshift(searchKey.value)
       } else {
         if (historyList.value.length === 10) {
           //判断长度为10 就去切尾 ，因为代码走到这里是一定要增加长度的 不需要再上面切
-          historyList.value.pop();
+          historyList.value.pop()
         }
-        historyList.value.unshift(searchKey.value);
+        historyList.value.unshift(searchKey.value)
       }
-      isResultShow.value = true;
-      inputRef.value?.blur();
-    };
+      isResultShow.value = true
+      inputRef.value?.blur()
+    }
     return {
       page,
       isPullUpLoad,
@@ -164,14 +165,14 @@ export default {
       historyList,
       enterKey,
       EmitChangeValue: (value) => {
-        console.log(value);
-        searchKey.value = value;
-        enterKey();
+        console.log(value)
+        searchKey.value = value
+        enterKey()
       },
       loading: computed(() => {
-        return HotList.value.length;
+        return HotList.value.length
       }),
-    };
+    }
   },
-};
+}
 </script>

@@ -20,17 +20,17 @@
 </template>
 
 <script lang="jsx">
-import Scroll from "@/components/scorll/index.vue";
-import { $SearchMultimatch } from "@/service/search";
-import { ref, watchPostEffect } from "vue";
-import MuiscList from "@/components/muiscList/index.vue";
+import Scroll from "@/components/scorll/index.vue"
+import { $SearchMultimatch } from "@/service/search"
+import { ref, watchPostEffect, onUnmounted } from "vue"
+import MuiscList from "@/components/muiscList/index.vue"
 export default {
   components: { Scroll, MuiscList },
   props: {
     value: {
       type: String,
       default: () => {
-        return "";
+        return ""
       },
     },
     isPullUpLoad: {
@@ -42,20 +42,25 @@ export default {
       default: 0,
     },
   },
-  setup: (props, { expose }) => {
-    const resultList = ref([]);
-    expose({ resultList });
-    watchPostEffect(async () => {
+  emits: ["resetPage"],
+  setup: (props, { expose, emit }) => {
+    const resultList = ref([])
+    expose({ resultList })
+    const stop = watchPostEffect(async () => {
       const { data } = await $SearchMultimatch({
         keywords: props.value,
         offset: (props.page - 1) * 30,
-      });
-      resultList.value.push(...data.result.songs);
-      console.log(data);
-    });
-    return { resultList, props };
+      })
+      resultList.value.push(...data.result.songs)
+      console.log(data)
+    })
+    onUnmounted(() => {
+      stop()
+      emit("resetPage")
+    })
+    return { resultList, props }
   },
-};
+}
 </script>
 <style scoped>
 .resultStyle {
