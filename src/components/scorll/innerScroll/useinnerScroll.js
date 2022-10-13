@@ -18,7 +18,6 @@ export default function useScroll(wrapperRef, options, emit) {
 
         if (options.probeType > 0) {
             scrollVal.on("scroll", (pos) => {
-                console.log(pos);
                 emit("scroll", pos);
             });
         }

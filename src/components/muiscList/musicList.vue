@@ -40,7 +40,9 @@
           transform-origin-t
           w="100%"
           h="310px"
-          :style="{ background: `url(${data?.picUrl})` }"
+          :style="{
+            background: `url(${data?.creator?.backgroundUrl || data?.picUrl})`,
+          }"
         >
           <div
             position-absolute
@@ -61,7 +63,7 @@
               z-100
               truncate
             >
-              <strong> {{ data?.name }}</strong>
+              <strong> {{ data?.creator?.nickname || data?.name }}</strong>
             </div>
             <div
               w-70px
@@ -72,7 +74,12 @@
               rd-12px
               overflow-hidden
             >
-              <img v-lazy="data?.picUrl" w-full h-full object-cover />
+              <img
+                :src="data?.creator?.avatarUrl || data?.picUrl"
+                w-full
+                h-full
+                object-cover
+              />
             </div>
             <div
               position-absolute
@@ -106,8 +113,8 @@
 </template>
 
 <script lang="jsx">
-import Scroll from "@/components/scorll/index.vue"
-import SongList from "@/components/muiscList/index.vue"
+import Scroll from "@/components/scorll/index.vue";
+import SongList from "@/components/muiscList/index.vue";
 export default {
   name: "music-list",
   components: {
@@ -118,13 +125,13 @@ export default {
     songs: {
       type: Array,
       default() {
-        return []
+        return [];
       },
     },
     data: {
       type: Object,
     },
   },
-}
+};
 </script>
 <style scoped></style>

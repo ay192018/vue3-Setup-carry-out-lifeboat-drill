@@ -2,7 +2,7 @@
   <div flex h-44px leading-44px text-center>
     <div
       flex-1
-      v-for="(tab, _) in tabs"
+      v-for="tab in tabs"
       :key="tab.path"
       @click="$router.push(tab.path)"
     >
@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { useRoute } from "vue-router"
-import { ref } from "vue"
+import { useRoute } from "vue-router";
+import { ref } from "vue";
 export default {
   name: "tab",
   setup: () => {
@@ -36,14 +36,18 @@ export default {
         name: "搜索",
         path: "/search",
       },
-    ])
+      {
+        name: "我的",
+        path: "/my",
+      },
+    ]);
 
     return {
       tabs,
       route: useRoute(),
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>

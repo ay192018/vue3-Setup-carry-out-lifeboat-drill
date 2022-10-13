@@ -8,17 +8,16 @@
     right-0
     overflow="scroll"
     style="background: var(--color-background)"
-   
   >
     <muiscList :songs="songs" :data="data"></muiscList>
   </div>
 </template>
 
 <script lang="jsx">
-import { onMounted, reactive, ref, toRefs } from "vue"
-import { $ArtistDetail, $Artists } from "@/service/singer.js"
+import { onMounted, reactive, ref, toRefs } from "vue";
+import { $ArtistDetail, $Artists } from "@/service/singer.js";
 
-import muiscList from "@/components/muiscList/musicList.vue"
+import muiscList from "@/components/muiscList/musicList.vue";
 export default {
   components: {
     muiscList,
@@ -32,23 +31,23 @@ export default {
     const ArtistsItem = reactive({
       data: {},
       songs: [],
-    })
+    });
     onMounted(async () => {
       /*  const { data } = await $ArtistDetail({
         id: props.id,
       }) */
       const { data } = await $Artists({
         id: props.id,
-      })
-      ArtistsItem.songs = data.hotSongs
-      ArtistsItem.data = data.artist
-      console.log(ArtistsItem.data)
-    })
+      });
+      ArtistsItem.songs = data.hotSongs;
+      ArtistsItem.data = data.artist;
+      console.log(ArtistsItem.data);
+    });
     return {
       props,
       ...toRefs(ArtistsItem),
-    }
+    };
   },
-}
+};
 </script>
 <style scoped></style>

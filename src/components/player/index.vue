@@ -242,20 +242,20 @@
 </template>
 
 <script lang="jsx">
-import { ref, computed, watch, nextTick } from "vue"
-import { useAudio } from "@/stores/useAudio"
-import { storeToRefs } from "pinia"
-import { $songUrl, $lyrics } from "@/service/song"
-import useMode from "./useMode"
-import Progress from "./progress.vue"
-import { formatTime, formatTimeStart } from "@/assets/js/Uilts"
-import Scroll from "@/components/scorll/index.vue"
-import LyricPlugin from "./useLyric"
-import useToggleCd from "./useToggleCd"
-import miniPlayer from "./miniPlayer.vue"
-import useAnimation from "./useAnimation"
-import { fullScreen, playing } from "@/stores/useStatus"
-import useLodingConfig from "@/stores/plugin/useLoding"
+import { ref, computed, watch, nextTick } from "vue";
+import { useAudio } from "@/stores/useAudio";
+import { storeToRefs } from "pinia";
+import { $songUrl, $lyrics } from "@/service/song";
+import useMode from "./useMode";
+import Progress from "./progress.vue";
+import { formatTime, formatTimeStart } from "@/assets/js/Uilts";
+import Scroll from "@/components/scorll/index.vue";
+import LyricPlugin from "./useLyric";
+import useToggleCd from "./useToggleCd";
+import miniPlayer from "./miniPlayer.vue";
+import useAnimation from "./useAnimation";
+import { fullScreen, playing } from "@/stores/useStatus";
+import useLodingConfig from "@/stores/plugin/useLoding";
 export default {
   components: {
     Progress,
@@ -263,20 +263,20 @@ export default {
     miniPlayer,
   },
   setup: () => {
-    const audioRef = ref()
-    const { playlist, currentIndex, mode, Url } = storeToRefs(useAudio())
+    const audioRef = ref();
+    const { playlist, currentIndex, mode, Url } = storeToRefs(useAudio());
     const { cdWrapperRef, enter, afterEnter, leave, afterLeave } =
-      useAnimation()
-    const currenTime = ref(0)
-    const currentLineNum = ref(0)
-    const songReady = ref(false)
-    const lyricScrollRef = ref()
-    const playingLyric = ref("")
-    const lyricListRef = ref()
-    const currentLyric = ref()
-    let progressChange = false
-    const { changeMode, ModeIndex } = useMode()
-    useLodingConfig()
+      useAnimation();
+    const currenTime = ref(0);
+    const currentLineNum = ref(0);
+    const songReady = ref(false);
+    const lyricScrollRef = ref();
+    const playingLyric = ref("");
+    const lyricListRef = ref();
+    const currentLyric = ref();
+    let progressChange = false;
+    const { changeMode, ModeIndex } = useMode();
+    useLodingConfig();
     const {
       currentShow,
       middleLStyle,
@@ -284,89 +284,89 @@ export default {
       onMiddleTouchStart,
       onMiddleTouchMove,
       onMiddleTouchEnd,
-    } = useToggleCd()
+    } = useToggleCd();
     watch(
       () => playlist.value[currentIndex.value]?.id,
       async () => {
         const { data } = await $songUrl({
           id: playlist.value[currentIndex.value].id,
           br: 999000,
-        })
-        songReady.value = false
-        currenTime.value = 0
-        stopLyric()
-        currentLyric.value = null
-        currentLineNum.value = 0
+        });
+        songReady.value = false;
+        currenTime.value = 0;
+        stopLyric();
+        currentLyric.value = null;
+        currentLineNum.value = 0;
         const { data: lyrics } = await $lyrics({
           id: playlist.value[currentIndex.value].id,
-        })
+        });
 
         currentLyric.value = new LyricPlugin(
           lyrics.lrc.lyric,
           ({ lineNum, txt }) => {
-            playingLyric.value = txt
-            currentLineNum.value = lineNum
-            const scrollComp = lyricScrollRef.value
-            const listEl = lyricListRef.value
-            if (!listEl) return
+            playingLyric.value = txt;
+            currentLineNum.value = lineNum;
+            const scrollComp = lyricScrollRef.value;
+            const listEl = lyricListRef.value;
+            if (!listEl) return;
             if (lineNum > 5) {
-              const lineEl = listEl.children[lineNum - 5]
-              scrollComp.scroll.scrollToElement(lineEl, 500)
+              const lineEl = listEl.children[lineNum - 5];
+              scrollComp.scroll.scrollToElement(lineEl, 500);
             } else {
-              scrollComp.scroll.scrollTo(0, 0, 500)
+              scrollComp.scroll.scrollTo(0, 0, 500);
             }
           }
-        )
-        const hasLyric = currentLyric.value.lines.length
+        );
+        const hasLyric = currentLyric.value.lines.length;
         if (hasLyric) {
           if (songReady.value) {
-            playLyric()
+            playLyric();
           }
         }
-        Url.value = data.data[0].url
+        Url.value = data.data[0].url;
         nextTick(() => {
-          const audioEl = audioRef.value
-          audioEl.src = Url.value
-          audioEl.play()
-          playLyric()
+          const audioEl = audioRef.value;
+          audioEl.src = Url.value;
+          audioEl.play();
+          playLyric();
 
-          playing.value = true
-          currenTime.value = 0
-        })
+          playing.value = true;
+          currenTime.value = 0;
+        });
       }
-    )
+    );
     watch(playing, (newPlaying) => {
       if (!songReady.value) {
-        return
+        return;
       }
-      const audioEl = audioRef.value
+      const audioEl = audioRef.value;
       if (newPlaying) {
-        audioEl.play()
-        playLyric()
+        audioEl.play();
+        playLyric();
       } else {
-        audioEl.pause()
-        stopLyric()
+        audioEl.pause();
+        stopLyric();
       }
-    })
+    });
 
     const playLyric = () => {
-      const currentLyricVal = currentLyric.value
+      const currentLyricVal = currentLyric.value;
       if (currentLyricVal) {
-        currentLyricVal.seek(currenTime.value * 1000)
+        currentLyricVal.seek(currenTime.value * 1000);
       }
-    }
+    };
     const stopLyric = () => {
-      const currentLyricVal = currentLyric.value
+      const currentLyricVal = currentLyric.value;
       if (currentLyricVal) {
-        currentLyricVal.stop()
+        currentLyricVal.stop();
       }
-    }
+    };
     const loop = () => {
-      const audioEl = audioRef.value
-      audioEl.currentTime = 0
-      audioEl.play()
-      playing.value = true
-    }
+      const audioEl = audioRef.value;
+      audioEl.currentTime = 0;
+      audioEl.play();
+      playing.value = true;
+    };
     return {
       enter,
       afterEnter,
@@ -395,7 +395,7 @@ export default {
           ? "i-radix-icons-loop"
           : mode.value === 1
           ? "i-material-symbols-360"
-          : "i-tabler-arrows-random"
+          : "i-tabler-arrows-random";
       }),
       fullScreen,
       audioRef,
@@ -403,108 +403,108 @@ export default {
       formatTimeStart,
       loop,
       songName: computed(() => {
-        return playlist.value[currentIndex.value]?.name
+        return playlist.value[currentIndex.value]?.name;
       }),
       songSinger: computed(() => {
-        return playlist.value[currentIndex.value]?.ar
+        return playlist.value[currentIndex.value]?.ar;
       }),
       currentBg: computed(() => {
-        return playlist.value[currentIndex.value]?.al.picUrl
+        return playlist.value[currentIndex.value]?.al.picUrl;
       }),
       playIcon: computed(() => {
         if (playing.value) {
-          return "i-gg-play-pause-r"
+          return "i-gg-play-pause-r";
         } else {
-          return "i-mdi-play-speed"
+          return "i-mdi-play-speed";
         }
       }),
       progress: computed(() => {
         return (
           currenTime.value / (playlist.value[currentIndex.value]?.dt / 1000)
-        )
+        );
       }),
 
       next() {
-        if (!songReady.value || !playlist.value.length) return
+        if (!songReady.value || !playlist.value.length) return;
         if (playlist.value.length === 1) {
-          loop()
+          loop();
         } else {
           if (mode.value === 0 || mode.value === 1) {
-            const index = currentIndex.value + 1
+            const index = currentIndex.value + 1;
             if (index === playlist.value.length) {
-              currentIndex.value = 0
+              currentIndex.value = 0;
             } else {
-              currentIndex.value = index
+              currentIndex.value = index;
             }
           } else {
-            currentIndex.value = ModeIndex()
+            currentIndex.value = ModeIndex();
           }
         }
       },
       prev() {
-        if (!songReady.value || !playlist.value.length) return
+        if (!songReady.value || !playlist.value.length) return;
         if (playlist.value.length === 1) {
-          loop()
+          loop();
         } else {
           if (mode.value === 0 || mode.value === 1) {
-            const index = currentIndex.value - 1
+            const index = currentIndex.value - 1;
             if (index === -1) {
-              currentIndex.value = playlist.value.length - 1
+              currentIndex.value = playlist.value.length - 1;
             } else {
-              currentIndex.value = index
+              currentIndex.value = index;
             }
           } else {
-            currentIndex.value = ModeIndex()
+            currentIndex.value = ModeIndex();
           }
         }
       },
       onProgressChanging(val) {
-        progressChange = true
+        progressChange = true;
 
-        currenTime.value = (playlist.value[currentIndex.value].dt / 1000) * val
-        playLyric()
-        stopLyric()
+        currenTime.value = (playlist.value[currentIndex.value].dt / 1000) * val;
+        playLyric();
+        stopLyric();
       },
       onProgressChanged(val) {
-        progressChange = false
+        progressChange = false;
         audioRef.value.currentTime = currenTime.value =
-          (playlist.value[currentIndex.value].dt / 1000) * val
-        if (!playing.value) playing.value = true
-        playLyric()
+          (playlist.value[currentIndex.value].dt / 1000) * val;
+        if (!playing.value) playing.value = true;
+        playLyric();
       },
 
       error() {
-        console.log("error")
+        console.log("error");
       },
       updateTime(e) {
-        if (progressChange) return
-        currenTime.value = e.target.currentTime
+        if (progressChange) return;
+        currenTime.value = e.target.currentTime;
       },
       ended() {
         if (mode.value === 0) {
-          currentIndex.value++
+          currentIndex.value++;
         } else if (mode.value === 1) {
-          loop()
+          loop();
         } else {
-          currentIndex.value = ModeIndex()
+          currentIndex.value = ModeIndex();
         }
       },
       ready() {
         if (songReady.value) {
-          return
+          return;
         }
-        songReady.value = true
-        playLyric()
+        songReady.value = true;
+        playLyric();
       },
       togglePlay() {
         if (!songReady.value) {
-          return
+          return;
         }
-        playing.value = !playing.value
+        playing.value = !playing.value;
       },
-    }
+    };
   },
-}
+};
 </script>
 <style scoped>
 .active {

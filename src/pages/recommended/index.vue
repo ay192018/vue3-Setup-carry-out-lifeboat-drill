@@ -67,11 +67,11 @@
 </template>
 
 <script lang="jsx">
-import { onMounted, ref, computed } from "vue"
-import { $Banner, $Song } from "@/service/home.js"
-import Banner from "@/components/banner/index.vue"
-import Scroll from "@/components/scorll/index.vue"
-import { useRouter } from "vue-router"
+import { onMounted, ref, computed } from "vue";
+import { $Banner, $Song } from "@/service/home.js";
+import Banner from "@/components/banner/index.vue";
+import Scroll from "@/components/scorll/index.vue";
+import { useRouter } from "vue-router";
 export default {
   name: "recommend",
   components: {
@@ -80,51 +80,51 @@ export default {
   },
 
   setup: () => {
-    const sliders = ref([])
-    const albums = ref([])
-    const AyyText = ref("正在玩命加载中！！")
-    const HotSongs = ref("热门歌单推荐")
-    const ActiveId = ref()
-    const router = useRouter()
+    const sliders = ref([]);
+    const albums = ref([]);
+    const AyyText = ref("正在玩命加载中！！");
+    const HotSongs = ref("热门歌单推荐");
+    const ActiveId = ref();
+    const router = useRouter();
     onMounted(async () => {
-      const { data } = await $Banner()
+      const { data } = await $Banner();
       const { data: song } = await $Song({
         limit: 100,
-      })
+      });
       song.result.forEach((_) => {
         albums.value.push({
           name: _.name,
           picUrl: _.picUrl,
           id: _.id,
-        })
-      })
+        });
+      });
       data.banners.forEach((_) => {
         sliders.value.push({
           imageUrl: _.imageUrl,
           url: _.url,
-        })
-      })
-    })
+        });
+      });
+    });
     return {
       sliders,
       albums,
       loading: computed(() => {
-        return !sliders.value.length && !albums.value.length
+        return !sliders.value.length && !albums.value.length;
       }),
       AyyText,
       HotSongs,
       ActiveId,
       selectItem: (_) => {
-        ActiveId.value = _
+        ActiveId.value = _;
         router.push({
           name: "recommendDetail",
           params: {
             id: _,
           },
-        })
+        });
       },
-    }
+    };
   },
-}
+};
 </script>
 <style scoped></style>
