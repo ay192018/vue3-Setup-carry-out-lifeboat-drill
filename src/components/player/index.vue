@@ -90,24 +90,22 @@
               box-border
             >
               <div w-full h-full rd="15px">
-                <img
-                  absolute
-                  left-0
-                  top-0
-                  w-full
-                  h-full
-                  box-border
-                  rd="15px"
-                  b-10px
-                  style="
-                    border-color: linear-gradient(
-                      90deg,
-                      rgb(191, 179, 255),
-                      rgb(255, 203, 168)
-                    );
-                  "
-                  :src="currentBg"
-                />
+                <template v-for="({ al }, index) of playlist" :key="index">
+                  <TransitionGroup :name="transitionName" appear>
+                    <div
+                      class="player-cover__item"
+                      absolute
+                      left-0
+                      top-0
+                      w-full
+                      h-full
+                      box-border
+                      rd="15px"
+                      v-if="index === currentIndex"
+                      :style="{ background: `url(${al.picUrl})` }"
+                    ></div
+                  ></TransitionGroup>
+                </template>
               </div>
             </div>
             <div
@@ -117,7 +115,16 @@
               text-xl
               v-if="currentLyric"
             >
-              <p>{{ playingLyric }}</p>
+              <template
+                v-for="({ txt, time }, index) of currentLyric.lines"
+                :key="time"
+              >
+                <TransitionGroup name="list"
+                  ><p v-if="currentLineNum === index">
+                    {{ txt }}
+                  </p></TransitionGroup
+                >
+              </template>
             </div>
           </div>
           <Scroll
@@ -273,6 +280,7 @@ export default {
     const songReady = ref(false)
     const lyricScrollRef = ref()
     const playingLyric = ref("")
+    const transitionName = ref("")
     const lyricListRef = ref()
     const currentLyric = ref()
     let progressChange = false
@@ -369,6 +377,7 @@ export default {
       playing.value = true
     }
     return {
+      transitionName,
       enter,
       afterEnter,
       leave,
@@ -427,6 +436,7 @@ export default {
 
       next() {
         if (!songReady.value || !playlist.value.length) return
+        transitionName.value = "scale-out"
         if (playlist.value.length === 1) {
           loop()
         } else {
@@ -444,6 +454,8 @@ export default {
       },
       prev() {
         if (!songReady.value || !playlist.value.length) return
+        transitionName.value = "scale-in"
+
         if (playlist.value.length === 1) {
           loop()
         } else {
@@ -473,7 +485,6 @@ export default {
         if (!playing.value) playing.value = true
         playLyric()
       },
-
       error() {
         console.log("error")
       },
@@ -511,7 +522,7 @@ export default {
 .active {
   width: 20px;
   border-radius: 5px;
-  background: #ffffffcc;
+  background: var(--vt--color-primary);
 }
 .normal-enter-active,
 .normal-leave-active {
@@ -533,5 +544,75 @@ export default {
 .normal-enter-from,
 .normal-leave-to .bottom {
   transform: translate3d(0, 100px, 0);
+}
+.player-cover__item {
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: cover !important;
+}
+.player-cover__item:before {
+  content: "";
+  background: inherit;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 10px 40px 0px rgba(76, 70, 124, 0.5);
+  display: block;
+  z-index: 1;
+  position: absolute;
+  top: 30px;
+  transform: scale(0.9);
+  filter: blur(10px);
+  opacity: 0.9;
+  border-radius: 15px;
+}
+.player-cover__item:after {
+  content: "";
+  background: inherit;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 10px 40px 0px rgba(76, 70, 124, 0.5);
+  display: block;
+  z-index: 2;
+  position: absolute;
+  border-radius: 15px;
+}
+.scale-out-enter-active {
+  transition: all 0.35s ease-in-out;
+}
+
+.scale-out-leave-active {
+  transition: all 0.35s ease-in-out;
+}
+
+.scale-out-enter {
+  transform: scale(0.35);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.scale-out-leave-to {
+  transform: scale(1.5);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.scale-in-enter-active {
+  transition: all 0.35s ease-in-out;
+}
+
+.scale-in-leave-active {
+  transition: all 0.35s ease-in-out;
+}
+
+.scale-in-enter {
+  transform: translate(100%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.scale-in-leave-to {
+  transform: scale(0.35);
+  pointer-events: none;
+  opacity: 0;
 }
 </style>

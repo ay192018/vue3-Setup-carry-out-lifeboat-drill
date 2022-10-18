@@ -8,9 +8,9 @@
     <div class="dots-wrapper">
       <span
         class="dot"
-        v-for="(item, index) in sliders"
-        :key="index"
-        :class="{ active: currentPageIndex === index }"
+        v-for="(item, index) in sliders.length"
+        :key="item"
+        :class="{ active: currentPageIndex === item - 1 }"
       >
       </span>
     </div>

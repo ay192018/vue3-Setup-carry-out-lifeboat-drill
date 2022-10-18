@@ -33,7 +33,7 @@
       <div flex flex-col justify-center flex-1 leading-20px overflow-hidden>
         <div relative overflow-hidden truncate>
           <div inline-block w-full translate-0 backface-hidden>
-            <h2 mb-2px style="color: var(--vt--color-primary)">
+            <h2 mb-2px class="text-[var(--vt--color-primary)]" truncate>
               {{ songName }}
             </h2>
             <p text-sm>
