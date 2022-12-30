@@ -6,7 +6,6 @@
     bottom="0"
     overflow="scroll"
     v-Ayy:[AyyText]="!loading"
-    mb-60px
   >
     <Scroll h="100%" overflow="hidden" ref="ScrollRef">
       <div>
@@ -50,60 +49,60 @@
 </template>
 
 <script lang="jsx">
-import { onMounted, ref, watchPostEffect } from "vue";
-import { $Artist, $HotArtist } from "@/service/singer.js";
-import { useRouter } from "vue-router";
-import Scroll from "@/components/scorll/index.vue";
-import { computed } from "@vue/reactivity";
+import { onMounted, ref, watchPostEffect } from "vue"
+import { $Artist, $HotArtist } from "@/service/singer.js"
+import { useRouter } from "vue-router"
+import Scroll from "@/components/scorll/index.vue"
+import { computed } from "@vue/reactivity"
 export default {
   components: {
     Scroll,
   },
   setup: () => {
-    const HotList = ref([]);
-    const router = useRouter();
-    const ActiveId = ref();
-    const ScrollRef = ref();
-    const offset = 0;
+    const HotList = ref([])
+    const router = useRouter()
+    const ActiveId = ref()
+    const ScrollRef = ref()
+    const offset = 0
 
     watchPostEffect(async () => {
       const { data: singerList } = await $HotArtist({
         limit: 100,
         offset: offset,
-      });
+      })
       singerList.artists.forEach((_) => {
         HotList.value.push({
           picUrl: _.picUrl,
           name: _.name,
           id: _.id,
-        });
-      });
-      ScrollRef.value.scroll.finishPullUp();
-    });
+        })
+      })
+      ScrollRef.value.scroll.finishPullUp()
+    })
     onMounted(() => {
       ScrollRef.value.scroll.on("pullingUp", () => {
-        console.log(offset);
-      });
-    });
+        console.log(offset)
+      })
+    })
     return {
       ScrollRef,
       HotList,
       loading: computed(() => {
-        return HotList.value.length;
+        return HotList.value.length
       }),
       selectItem: (_) => {
-        ActiveId.value = _;
+        ActiveId.value = _
         router.push({
           name: "Detail",
           params: {
             id: _,
           },
-        });
+        })
       },
       ActiveId,
       AyyText: "玩命加载中！！！",
-    };
+    }
   },
-};
+}
 </script>
 <style scoped></style>

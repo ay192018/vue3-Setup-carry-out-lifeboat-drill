@@ -14,8 +14,8 @@
         top-0
         bottom-0
         z-150
-        backdrop-blur-5px
         class="bg-[var(--color-border)]"
+        :style="{ background }"
         v-show="fullScreen"
       >
         <div
@@ -26,10 +26,9 @@
           h-full
           class="-z-1"
           opacity-60
-          filter-blur-20px
           style="box-shadow: 0px 10px 40px 0px rgb(76 70 124 / 50%)"
         >
-          <img :src="currentBg" w-full h-full />
+          <div w-full h-full />
         </div>
         <div relative mb-25px class="top">
           <div
@@ -51,11 +50,12 @@
             leading-40px
             text-center
             text-xl
+            font-600
             truncate
           >
             {{ songName }}
           </h1>
-          <h2 leading-20px text-center class="text-[var(--color-text)]">
+          <h2 leading-20px text-center class="text-#ccc">
             <span v-for="({ name }, index) of songSinger" :key="index"
               >{{ name }}&nbsp;&nbsp;</span
             >
@@ -141,6 +141,7 @@
                 <p
                   leading-32px
                   text="#fff"
+                  font-500
                   :class="{ activeLyrics: currentLineNum === index }"
                   v-for="({ time, txt }, index) of currentLyric.lines"
                   :key="time"
@@ -204,14 +205,14 @@
               @click="changeMode"
             ></div>
             <div
-              text-3xl
-              class="i-fluent-previous-16-filled text-[var(--vt--color-primary)]"
+              text-4xl
+              class="i-tabler-player-track-prev text-[var(--vt--color-primary)]"
               flex-1
               text-right
               @click="prev"
             ></div>
             <div
-              text-5xl
+              text-4xl
               class="text-[var(--vt--color-primary)]"
               :class="playIcon"
               px20px
@@ -219,16 +220,15 @@
               @click="togglePlay"
             ></div>
             <div
-              text-3xl
-              style="color: var(--vt--color-primary)"
-              class="i-fluent-next-28-filled"
+              text-4xl
+              class="i-tabler-player-track-next text-[var(--vt--color-primary)]"
               text-left
               flex-1
               @click="next"
             ></div>
             <div
               text-3xl
-              class="i-icon-park-outline-love-and-help text-[var(--vt--color-primary)]"
+              class="i-icon-park-outline-unlike text-[var(--vt--color-primary)]"
               text-left
               flex-1
             ></div>
@@ -264,6 +264,9 @@ import miniPlayer from "./miniPlayer.vue"
 import useAnimation from "./useAnimation"
 import { fullScreen, playing } from "@/stores/useStatus"
 import useLodingConfig from "@/stores/plugin/useLoding"
+import { useTheme } from "@/stores/useTheme"
+import Color from "color"
+import * as Vibrant from "node-vibrant/dist/vibrant.worker.min.js"
 export default {
   components: {
     Progress,
@@ -283,6 +286,9 @@ export default {
     const transitionName = ref("")
     const lyricListRef = ref()
     const currentLyric = ref()
+    const background = ref("")
+    const Color1 = ref("")
+    const Color2 = ref("")
     let progressChange = false
     const { changeMode, ModeIndex } = useMode()
     useLodingConfig()
@@ -294,6 +300,27 @@ export default {
       onMiddleTouchMove,
       onMiddleTouchEnd,
     } = useToggleCd()
+    const { colorRgb } = storeToRefs(useTheme())
+    watch(
+      () => playlist.value[currentIndex.value]?.al.picUrl,
+      () => {
+        const cover =
+          playlist.value[currentIndex.value]?.al.picUrl + "?param=256y256"
+        Vibrant.from(cover, { colorCount: 1 })
+          .getPalette()
+          .then((palette) => {
+            const originColor = Color.rgb(palette.DarkMuted._rgb)
+            const color = originColor.darken(0.1).rgb().string()
+            const color2 = originColor.lighten(0.28).rotate(-30).rgb().string()
+            background.value = `linear-gradient(to top left ,${color},${color2})`
+            Color1.value = color
+            Color2.value = color2
+          })
+      },
+      {
+        immediate: true,
+      }
+    )
     watch(
       () => playlist.value[currentIndex.value]?.id,
       async () => {
@@ -309,7 +336,6 @@ export default {
         const { data: lyrics } = await $lyrics({
           id: playlist.value[currentIndex.value].id,
         })
-
         currentLyric.value = new LyricPlugin(
           lyrics.lrc.lyric,
           ({ lineNum, txt }) => {
@@ -342,6 +368,9 @@ export default {
           playing.value = true
           currenTime.value = 0
         })
+      },
+      {
+        immediate: false,
       }
     )
     watch(playing, (newPlaying) => {
@@ -377,6 +406,10 @@ export default {
       playing.value = true
     }
     return {
+      background,
+      Color1,
+      Color2,
+      colorRgb,
       transitionName,
       enter,
       afterEnter,
@@ -418,14 +451,12 @@ export default {
       songSinger: computed(() => {
         return playlist.value[currentIndex.value]?.ar
       }),
-      currentBg: computed(() => {
-        return playlist.value[currentIndex.value]?.al.picUrl
-      }),
+
       playIcon: computed(() => {
         if (playing.value) {
-          return "i-gg-play-pause-r"
+          return "i-fluent-pause-48-filled"
         } else {
-          return "i-mdi-play-speed"
+          return "i-fluent-play-16-filled"
         }
       }),
       progress: computed(() => {
@@ -455,7 +486,6 @@ export default {
       prev() {
         if (!songReady.value || !playlist.value.length) return
         transitionName.value = "scale-in"
-
         if (playlist.value.length === 1) {
           loop()
         } else {
@@ -473,7 +503,6 @@ export default {
       },
       onProgressChanging(val) {
         progressChange = true
-
         currenTime.value = (playlist.value[currentIndex.value].dt / 1000) * val
         playLyric()
         stopLyric()
@@ -555,7 +584,7 @@ export default {
   background: inherit;
   width: 100%;
   height: 100%;
-  box-shadow: 0px 10px 40px 0px rgba(76, 70, 124, 0.5);
+  box-shadow: -1px 0em 4em rgba(v-bind(Color1));
   display: block;
   z-index: 1;
   position: absolute;
@@ -570,7 +599,7 @@ export default {
   background: inherit;
   width: 100%;
   height: 100%;
-  box-shadow: 0px 10px 40px 0px rgba(76, 70, 124, 0.5);
+  box-shadow: -1px 0em 4em rgba(v-bind(Color2));
   display: block;
   z-index: 2;
   position: absolute;

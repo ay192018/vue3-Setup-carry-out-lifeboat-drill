@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { useRoute } from "vue-router";
-import { ref } from "vue";
+import { useRoute } from "vue-router"
+import { ref } from "vue"
 export default {
   name: "tab",
   setup: () => {
@@ -40,14 +40,14 @@ export default {
         name: "我的",
         path: "/my",
       },
-    ]);
+    ])
 
     return {
       tabs,
       route: useRoute(),
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>

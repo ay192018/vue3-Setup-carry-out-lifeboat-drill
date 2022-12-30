@@ -39,7 +39,6 @@ export default class Lyric {
       this.tags[tag] = (matches && matches[1]) || ""
     }
   }
-
   _initLines() {
     const lines = this.lrc.split("\n")
     for (let i = 0; i < lines.length; i++) {

@@ -5,7 +5,6 @@
     position-fixed
     bottom="0"
     overflow="scroll"
-    mb-60px
     v-Ayy="loading"
   >
     <Scroll h="100%" overflow="hidden">

@@ -1,13 +1,5 @@
 <template>
-  <div
-    mb-60px
-    w="100%"
-    top="100px"
-    fixed
-    bottom="0"
-    overflow="scroll"
-    v-Ayy="!loading"
-  >
+  <div w="100%" top="100px" fixed bottom="0" overflow="scroll" v-Ayy="!loading">
     <Scroll h="100%" overflow="hidden" ref="ScrollRef">
       <div>
         <div mb-20px mx-10px>
@@ -120,7 +112,6 @@ export default {
           ScrollRef.value?.scroll.on("pullingUp", () => {
             isPullUpLoad.value = true
             page.value++
-
             ScrollRef.value?.scroll.finishPullUp()
             ScrollRef.value?.scroll.bscroll?.refresh()
             isPullUpLoad.value = false

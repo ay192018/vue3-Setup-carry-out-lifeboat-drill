@@ -25,14 +25,7 @@
       {{ data?.name }}
     </h1>
 
-    <Scroll
-      h-full
-      overflow="hidden"
-      position-absolute
-      w="100%"
-      bottom-0
-      mb-60px
-    >
+    <Scroll h-full overflow="hidden" position-absolute w="100%" bottom-0>
       <div>
         <div
           position-relative
@@ -113,8 +106,8 @@
 </template>
 
 <script lang="jsx">
-import Scroll from "@/components/scorll/index.vue";
-import SongList from "@/components/muiscList/index.vue";
+import Scroll from "@/components/scorll/index.vue"
+import SongList from "@/components/muiscList/index.vue"
 export default {
   name: "music-list",
   components: {
@@ -125,13 +118,13 @@ export default {
     songs: {
       type: Array,
       default() {
-        return [];
+        return []
       },
     },
     data: {
       type: Object,
     },
   },
-};
+}
 </script>
 <style scoped></style>

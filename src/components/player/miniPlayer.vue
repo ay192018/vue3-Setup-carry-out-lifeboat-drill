@@ -1,6 +1,7 @@
 <template>
   <transition name="mini">
     <div
+      class="mini-shadow"
       flex
       items-center
       fixed
@@ -10,13 +11,13 @@
       w-full
       h-60px
       backdrop-blur-5px
-      style="
-        background: var(--minPlayer--bg);
-        box-shadow: rgb(255 255 255 / 10%) 0px 4px 6px -1px,
-          rgb(0 0 0 / 6%) 0px 2px 4px -1px;
-      "
+      :style="{
+        boxShadow: `rgba(${colorRgb}, 0.5) 0px 4px 25px -1px,
+    rgb(0 0 0 / 6%) 0px 2px 4px -1px`,
+      }"
+      style="background: var(--minPlayer--bg)"
       v-show="!fullScreen"
-      @click="fullScreen = true"
+      @click.stop="fullScreen = true"
     >
       <div flex-basis-40px w-40px h-40px mx-20px>
         <div ref="cdRef" w-full h-full>
@@ -55,6 +56,15 @@
           @click.stop="togglePlay"
         ></i>
       </div>
+      <div flex-basis-50px w-30px px-20px>
+        <i
+          absolute
+          left-0
+          top--1rem
+          text-3xl
+          class="i-material-symbols-queue-music text-[var(--vt--color-primary)]"
+        ></i>
+      </div>
     </div>
   </transition>
 </template>
@@ -66,6 +76,7 @@ import { storeToRefs } from "pinia"
 import { fullScreen, playing } from "@/stores/useStatus"
 import useCd from "./useCd"
 import ProgressCircle from "./ProgressCircle.vue"
+import { useTheme } from "@/stores/useTheme"
 export default {
   name: "mini-player",
   components: { ProgressCircle },
@@ -79,11 +90,13 @@ export default {
   setup: () => {
     const { playlist, currentIndex } = storeToRefs(useAudio())
     const { cdCls, cdRef, cdImageRef } = useCd()
+    const { colorRgb } = storeToRefs(useTheme())
     return {
       cdCls,
       fullScreen,
       cdImageRef,
       cdRef,
+      colorRgb,
       songName: computed(() => {
         return playlist.value[currentIndex.value]?.name
       }),
@@ -95,9 +108,9 @@ export default {
       }),
       playIcon: computed(() => {
         if (playing.value) {
-          return "i-gg-play-pause-r"
+          return "i-fluent-pause-48-filled"
         } else {
-          return "i-mdi-play-speed"
+          return "i-fluent-play-16-filled"
         }
       }),
     }
