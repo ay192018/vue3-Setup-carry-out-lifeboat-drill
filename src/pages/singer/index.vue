@@ -49,11 +49,11 @@
 </template>
 
 <script lang="jsx">
-import { onMounted, ref, watchPostEffect } from "vue"
+import { onMounted, ref, watchPostEffect, computed } from "vue"
 import { $Artist, $HotArtist } from "@/service/singer.js"
 import { useRouter } from "vue-router"
 import Scroll from "@/components/scorll/index.vue"
-import { computed } from "@vue/reactivity"
+
 export default {
   components: {
     Scroll,

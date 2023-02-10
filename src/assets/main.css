@@ -49,13 +49,13 @@ a {
 }
 
 .activeLyrics {
-  transform: rotateX(360deg);
   background-image: linear-gradient(to right, #fb9701 25%, #fe1a7e);
   transition: all 0.6s;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 18px;
+  font-size: 24px;
   animation: swing 1s infinite;
+  animation-play-state: paused;
 }
 
 .hidden-3 {
